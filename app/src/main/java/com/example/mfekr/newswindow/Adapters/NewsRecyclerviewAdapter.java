@@ -43,6 +43,7 @@ public class NewsRecyclerviewAdapter extends RecyclerView.Adapter<NewsRecyclervi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        //final Article article = mArticles.get(position);
         String poster_Path = mArticles.get(position).getUrlToImage();
         Picasso.get().load(Uri.parse(poster_Path)).into(holder.thumbnail);
         holder.title.setText(mArticles.get(position).getTitle());
