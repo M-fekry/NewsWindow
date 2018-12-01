@@ -29,7 +29,6 @@
         <receiver android:name=".Widget.NewsWindowWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.wordpress.laaptu.DATA_FETCHED" />
             </intent-filter>
 
             <meta-data

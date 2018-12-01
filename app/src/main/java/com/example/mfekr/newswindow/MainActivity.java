@@ -15,7 +15,6 @@ import com.example.mfekr.newswindow.Fragments.BusinessFragment;
 import com.example.mfekr.newswindow.Fragments.PoliticsFragment;
 import com.example.mfekr.newswindow.Fragments.SportsFragment;
 import com.example.mfekr.newswindow.Fragments.TechnologyFragment;
-import com.example.mfekr.newswindow.Widget.FetchDataFromWeb;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
-        FetchDataFromWeb fetchDataFromWeb = new FetchDataFromWeb();
-        fetchDataFromWeb.fetchData(this);
+
     }
 
 //    public void fetchDataForWidget(){
