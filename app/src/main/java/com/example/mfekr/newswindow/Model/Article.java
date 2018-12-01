@@ -1,28 +1,35 @@
 package com.example.mfekr.newswindow.Model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 
-
+@Entity(tableName = "favoritesArticles")
 public class Article implements Parcelable
 {
 
-
-    private Source source;
-
+//    @ColumnInfo(name="source")
+//    private Source source;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "article_id")
+    private int id;
+    @ColumnInfo(name = "author")
     private String author;
-
+    @ColumnInfo(name = "title")
     private String title;
-
+    @ColumnInfo(name = "description")
     private String description;
-
+    @ColumnInfo(name = "url")
     private String url;
-
+    @ColumnInfo(name = "urlToImage")
     private String urlToImage;
-
+    @ColumnInfo(name = "date")
     private String publishedAt;
-
+    @ColumnInfo(name = "content")
     private String content;
     public final static Parcelable.Creator<Article> CREATOR = new Creator<Article>() {
 
@@ -38,7 +45,8 @@ public class Article implements Parcelable
     };
 
     protected Article(Parcel in) {
-        this.source = ((Source) in.readValue((Source.class.getClassLoader())));
+        //this.source = ((Source) in.readValue((Source.class.getClassLoader())));
+        this.id = in.readInt();
         this.author = ((String) in.readValue((String.class.getClassLoader())));
         this.title = ((String) in.readValue((String.class.getClassLoader())));
         this.description = ((String) in.readValue((String.class.getClassLoader())));
@@ -62,13 +70,26 @@ public class Article implements Parcelable
      * @param author
      * @param urlToImage
      * @param title
-     * @param source
      * @param description
      * @param url
      */
-    public Article(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
+//    @Ignore
+//    public Article(String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
+//        super();
+//        //this.source = source;
+//        this.author = author;
+//        this.title = title;
+//        this.description = description;
+//        this.url = url;
+//        this.urlToImage = urlToImage;
+//        this.publishedAt = publishedAt;
+//        this.content = content;
+//    }
+
+    public Article(int id, Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         super();
-        this.source = source;
+        this.id = id;
+        //this.source = source;
         this.author = author;
         this.title = title;
         this.description = description;
@@ -78,15 +99,23 @@ public class Article implements Parcelable
         this.content = content;
     }
 
+    public int getId() {
+        return id;
+    }
 
-    public Source getSource() {
-        return source;
+    public void setId(int id) {
+        this.id = id;
     }
 
 
-    public void setSource(Source source) {
-        this.source = source;
-    }
+//    public Source getSource() {
+//        return source;
+//    }
+//
+//
+//    public void setSource(Source source) {
+//        this.source = source;
+//    }
 
 
     public String getAuthor() {
@@ -159,7 +188,8 @@ public class Article implements Parcelable
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(source);
+        //dest.writeValue(source);
+        dest.writeInt(id);
         dest.writeValue(author);
         dest.writeValue(title);
         dest.writeValue(description);

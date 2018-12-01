@@ -2,6 +2,6 @@
 <resources>
     <color name="colorPrimary">#3c3e4b</color>
     <color name="colorPrimaryDark">#363844</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#b7b8ff</color>
     <color name="signinColor">#d5d5d5</color>
 </resources>

@@ -3,4 +3,7 @@
     <string name="Sign_in_bar">SignIn</string>
     <string name="Sign_in_welcome">NewsWindow</string>
     <string name="Sign_in_attribute">This app powered by NewsApi, Icons from iconfinder and flaticon.</string>
+    <string name="saved_actionbar">Saved</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
