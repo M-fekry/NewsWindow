@@ -29,7 +29,8 @@ import retrofit2.Response;
 
 public class PoliticsFragment extends Fragment {
 
-    private static final String API_KEY ="58875bc7a1134b109bdc60f338406b4f";
+    //Add your API Key here.
+    private static final String API_KEY ="";
 
 //    private RecyclerView mRecyclerView;
 //    private NewsRecyclerviewAdapter mAdapter;

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">m
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +16,8 @@
         <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/iv_image_news"/>
+        android:id="@+id/iv_image_news"
+        android:contentDescription="@string/image_content_desc"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -22,6 +26,7 @@
             android:textSize="8pt"
             android:textColor="#ffffff"
             android:background="#5b5b5b"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Written by:"/>
+                android:text="@string/written_by"/>
             <TextView
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
@@ -40,7 +45,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/save"/>
+                android:id="@+id/save"
+                android:contentDescription="@string/image_content_desc_save"/>
 
         </LinearLayout>
 
@@ -65,11 +71,22 @@
             android:id="@+id/btn_read"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Read Full Article"
+            android:text="@string/read_full_article"
             android:textColor="#ffffff"
             app:backgroundTint="@color/colorPrimary"/>
 
     </LinearLayout>
-    
-
 </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_id_banner">
+    </com.google.android.gms.ads.AdView>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.mfekr.newswindow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,14 @@ import com.example.mfekr.newswindow.Fragments.BusinessFragment;
 import com.example.mfekr.newswindow.Fragments.PoliticsFragment;
 import com.example.mfekr.newswindow.Fragments.SportsFragment;
 import com.example.mfekr.newswindow.Fragments.TechnologyFragment;
+import com.example.mfekr.newswindow.sync.NewsFirebaseJobService;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
-    private static final String API_KEY ="58875bc7a1134b109bdc60f338406b4f";
-    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,41 +45,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
-
+        scheduleJob(this);
     }
 
-//    public void fetchDataForWidget(){
-//        RetrofitInterface service = RestClient.getApiClient().create(RetrofitInterface.class);
-//        Call<ResponseModel> call = service.getListNews("abc-news",API_KEY);
-//        call.enqueue(new Callback<ResponseModel>() {
-//            @Override
-//            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-//
-//                if(!response.isSuccessful()) {
-//                    Toast.makeText(MainActivity.this, "cod: "+response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                List<Article> articleList = response.body().getArticles();
-//                sharedPref = MainActivity.this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
-//                sharedPref.edit()
-//                        .put("WIDGET_TITLE", articleList)
-//                        .apply();
-//
-//                ComponentName provider = new ComponentName(MainActivity.this, NewsAppWidgetProvider.class);
-//                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(MainActivity.this);
-//                int[] ids = appWidgetManager.getAppWidgetIds(provider);
-//                NewsAppWidgetProvider bakingWidgetProvider = new NewsAppWidgetProvider();
-//                bakingWidgetProvider.onUpdate(MainActivity.this, appWidgetManager, ids);
-//
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<ResponseModel> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
                 return true;
             case R.id.about:
-                Intent y = new Intent(this, SavedActivity.class);
+                Intent y = new Intent(this, AboutActivity.class);
                 startActivity(y);
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,13 +84,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PoliticsFragment(), "Politics");
-        adapter.addFragment(new BusinessFragment(), "Business");
-        adapter.addFragment(new SportsFragment(), "Sports");
-        adapter.addFragment(new TechnologyFragment(), "Tech");
+        adapter.addFragment(new PoliticsFragment(), getString(R.string.politics));
+        adapter.addFragment(new BusinessFragment(), getString(R.string.business));
+        adapter.addFragment(new SportsFragment(), getString(R.string.sports));
+        adapter.addFragment(new TechnologyFragment(), getString(R.string.tech));
         viewPager.setAdapter(adapter);
     }
 
+    public static void scheduleJob(Context context) {
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        Job job = createJob(dispatcher);
+        dispatcher.mustSchedule(job);
+    }
 
+    public static Job createJob(FirebaseJobDispatcher dispatcher){
+
+        Job job = dispatcher.newJobBuilder()
+                .setLifetime(Lifetime.FOREVER)
+                .setService(NewsFirebaseJobService.class)
+                .setTag("news_service")
+                .setReplaceCurrent(false)
+                .setRecurring(true)
+                .setTrigger(Trigger.executionWindow(30, 60))
+                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
+                .setConstraints(Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING)
+                .build();
+        return job;
+    }
+
+    public static Job updateJob(FirebaseJobDispatcher dispatcher) {
+        Job newJob = dispatcher.newJobBuilder()
+                .setReplaceCurrent(true)
+                .setService(NewsFirebaseJobService.class)
+                .setTag("news_service")
+                .setTrigger(Trigger.executionWindow(30, 60))
+                .build();
+        return newJob;
+    }
+
+    public void cancelJob(Context context){
+
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        dispatcher.cancelAll();
+        dispatcher.cancel("news_service");
+
+    }
 
 }

@@ -18,7 +18,12 @@ import android.widget.Toast;
 import com.example.mfekr.newswindow.Database.AppDatabase;
 import com.example.mfekr.newswindow.Model.Article;
 import com.example.mfekr.newswindow.utils.AppExecutor;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.squareup.picasso.Picasso;
+
+import es.dmoral.toasty.Toasty;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -32,11 +37,16 @@ public class DetailsActivity extends AppCompatActivity {
     private Intent intent;
 
     private AppDatabase mAppDatabase;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        MobileAds.initialize(this, getString(R.string.ad_id));
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         mThumbnail = findViewById(R.id.iv_image_news);
         mTitle = findViewById(R.id.tv_title_news);
@@ -92,14 +102,18 @@ public class DetailsActivity extends AppCompatActivity {
 
                 if (mBookmark.getTag().equals(R.drawable.bookmark)){
                     saveArticle();
-                    Toast.makeText(DetailsActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DetailsActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                    Toasty.normal(DetailsActivity.this, getString(R.string.saved)).show();
                 }else  if (mBookmark.getTag().equals(R.drawable.marked)){
                     removeArticle();
-                    Toast.makeText(DetailsActivity.this, "removed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DetailsActivity.this, "removed", Toast.LENGTH_SHORT).show();
+                    Toasty.normal(DetailsActivity.this, getString(R.string.removed)).show();
                 }
 
             }
         });
+
+
 
     }
 

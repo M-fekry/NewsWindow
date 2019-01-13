@@ -1,9 +1,29 @@
 <resources>
     <string name="app_name">NewsWindow</string>
     <string name="Sign_in_bar">SignIn</string>
+    <string name="loading">Loading</string>
+    <string name="politics">Politics</string>
+    <string name="sports">Sports</string>
+    <string name="tech">Tech</string>
+    <string name="business">Business</string>
+    <string name="written_by">Written by:</string>
+    <string name="image_content_desc">Article Thumbnail</string>
+    <string name="image_content_desc_save">Article Thumbnail</string>
+    <string name="read_full_article">Read Full Article</string>
+    <string name="Signed_in_continue">Continue</string>
     <string name="Sign_in_welcome">NewsWindow</string>
     <string name="Sign_in_attribute">This app powered by NewsApi, Icons from iconfinder and flaticon.</string>
     <string name="saved_actionbar">Saved</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="ad_id_banner">ca-app-pub-6350234931426322/5750386522</string>
+    <string name="ad_id">ca-app-pub-6350234931426322~8851192587</string>
+    <string name="about">About app:</string>
+    <string name="aboutus">About us</string>
+    <string name="saved">Saved</string>
+    <string name="removed">Removed</string>
+    <string name="contact_us">Contact us via mail: m.fekry207@gmail.com</string>
+    <string name="network_not_available">Network not available!</string>
+    <string name="about_app">NewsWindow is a news app that allows you to read all the new news, you can choose among different categories and bookmark any article to read later and you can add our widget in the homescreen to see the TopHeadlines.</string>
+    <string name="thanks">Thanks for Udacity for helping me to learn android development and be able to make this app, I hope you enjoy it</string>
 </resources>
